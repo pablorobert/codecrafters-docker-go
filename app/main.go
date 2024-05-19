@@ -10,8 +10,6 @@ import (
 
 // Usage: your_docker.sh run <image> <command> <arg1> <arg2> ...
 func main() {
-
-	//syscall.Sethostname([]byte("container"))
 	command := os.Args[3]
 	args := os.Args[4:len(os.Args)]
 	
@@ -44,10 +42,7 @@ func main() {
 		syscall.Chdir("/")
 	}
 	
-
 	cmd := exec.Command(command, args...)
-	//cmd.Stdin = os.Stdin
-	//cmd.Stderr = os.Stderr	
 	cmd.SysProcAttr = &syscall.SysProcAttr{
         Cloneflags: syscall.CLONE_NEWNS | syscall.CLONE_NEWPID, 
     }
