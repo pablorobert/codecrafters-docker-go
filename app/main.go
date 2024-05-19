@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"os/exec"
 )
 
@@ -12,9 +13,18 @@ func main() {
 	args := os.Args[4:len(os.Args)]
 	
 	isError := false
+	exitCode := 0
+	var err error
 	if args[0] == "echo_stderr" {
 		args[0] = "echo"
 		isError = true
+	}
+	if (args[0] == "exit") {
+		exitCode, err = strconv.Atoi(args[1])
+		if (err != nil) {
+			exitCode = 0
+		}
+		os.Exit(exitCode)
 	}
 	
 	cmd := exec.Command(command, args...)
